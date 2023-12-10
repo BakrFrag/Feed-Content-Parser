@@ -1,13 +1,15 @@
 from pydantic import BaseModel 
-from datetime import date 
+from datetime import date , datetime
 
-class ParseURLFeed(BaseModel):
+class URLFeedModel(BaseModel):
     """
     schema model input for feed URL
     """
+    id: int 
     url: str
+    parsed_datetime: datetime 
 
-class FeedContent(BaseModel):
+class FeedContentModel(BaseModel):
     """
     schema model for feed content data
     """
