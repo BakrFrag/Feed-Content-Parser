@@ -1,7 +1,7 @@
-from .database import SessionLocal , engine
-from app.models.feed_content import FeedContent as feed_content
-from app.models.feed_url import FeedURL as feed_url
-#migrate User Table to Database
+from .database import SessionLocal , engine 
+from app.models import feed_content , feed_url
+
+
 feed_content.Base.metadata.create_all(bind=engine)
 feed_url.Base.metadata.create_all(bind=engine)
 

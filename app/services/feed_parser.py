@@ -9,7 +9,7 @@ class ParseRssFeed(object):
     parse rss feed within rss feed url 
     """
 
-    __parser = feedparser()
+    __parser = feedparser
     def __init__(self,url):
         """
         init necessry variables for feed parse 
@@ -17,26 +17,27 @@ class ParseRssFeed(object):
         self.url = url
         self.parse_exception = None
 
-    def handle_parse_exception(self):
+    def _handle_parse_exception(self):
         """
         handle various exceptions while get rss feed content
         """
+        print("feed parser exception:",self.parse_exception)
         if isinstance(self.parse_exception, urllib.error.URLError):
-            raise HTTPException("can't parse url , check internet connection")
+            raise HTTPException(status_code = 400 , detail="can't parse url , check internet connection")
         elif isinstance(self.parse_exception , xml.sax._exceptions.SAXParseException):
-            raise HTTPException("parsed url is not rss feed")
+            raise HTTPException(status_code = 400 , detail= "parsed url is not a valid rss feed")
     
-    def parse_rss_feed(self, url:str):
+    def parse_rss_feed(self):
         """
         parse rss feed & extract items
         """
         data = self.__parser.parse(self.url)
         if data.get("bozo"):
             self.parse_exception = data.get("bozo_exception")
-            return self.handle_parse_exception()
-        return self.extract_items(data)
+            return self._handle_parse_exception()
+        return self._extract_items(data)
     
-    def extract_items(self,data):
+    def _extract_items(self,data):
         """
         capture items in rss
         """
