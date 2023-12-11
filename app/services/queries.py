@@ -48,25 +48,16 @@ def update_rss_object(db:Session , url_feed_object ) -> URLFeedModel:
     return url_feed_object
 
 
-def insert_bulk_feed_content(db:Session, data:list , url_id: int):
+def insert_bulk_feed_content(db:Session, data:list ):
     """
     query optimization for insert multipli feed content with single query 
     instead of one query for each item
     """
-    data_to_insert = []
-    for item in data: 
-        item_data = {
-            "title":item.get("title") , 
-            "description":item.get("description"),
-            "link":item.get("link"),
-            "publish_date":item.get("publishDate"),
-            "url_id":url_id
-        }
-        data_to_insert.append(item_data)
+    feed_content_data = [FeedContent(**obj) for obj in data] 
+    db.add_all(feed_content_data)
+    
+    db.commit()
 
-    insert_bulk_feed_content_query = FeedContent.insert().values(data_to_insert)
-    with engine.connect() as db_connection:
-        db_connection.execute(insert_bulk_feed_content_query)
 
 
 def delete_bulk_feed_content(db:Session,url_id:int):
@@ -75,7 +66,20 @@ def delete_bulk_feed_content(db:Session,url_id:int):
     delete all content for specfic url 
     in case of re-parse url after 10 minutes and them update with new parse data
     """
-    delete_bulk_feed_content_query = FeedContent.delete().where(FeedContent.c.url_id == url_id)
-    with engine.connect() as db_connection:
-        db_connection.execute(delete_bulk_feed_content_query)
+   
+    db.query(FeedContent).filter(FeedContent.url_id == url_id).delete()
+    db.commit()
 
+def get_bulk_feed_content(db:Session,url_id):
+    """
+    return bulk feed content that's attached for specfic url by id
+    """
+    print(db.query(FeedContent).filter(url_id == url_id).all())
+    return db.query(FeedContent).filter(url_id == url_id).all()
+
+
+def get_all_feed_urls(db:Session):
+    """
+    retrieve all feeded rss urls
+    """
+    return db.query(FeedURL).all()

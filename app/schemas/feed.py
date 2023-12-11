@@ -1,6 +1,6 @@
 from pydantic import BaseModel 
-from datetime import date , datetime
-
+from datetime import datetime
+from typing import Optional
 class URLFeedModel(BaseModel):
     """
     for submit url to rss feed 
@@ -25,9 +25,9 @@ class FeedContentModel(BaseModel):
     schema model for feed content data
     """
     id: int 
-    title: str 
-    description: str 
-    link: str 
-    publish_date: date 
+    title: Optional[str] 
+    description: Optional[str]
+    link: Optional[str]
+    publish_date: Optional[str]
     
    

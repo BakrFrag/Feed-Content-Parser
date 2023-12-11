@@ -21,7 +21,7 @@ class ParseRssFeed(object):
         """
         handle various exceptions while get rss feed content
         """
-        print("feed parser exception:",self.parse_exception)
+        
         if isinstance(self.parse_exception, urllib.error.URLError):
             raise HTTPException(status_code = 400 , detail="can't parse url , check internet connection")
         elif isinstance(self.parse_exception , xml.sax._exceptions.SAXParseException):
@@ -41,6 +41,23 @@ class ParseRssFeed(object):
         """
         capture items in rss
         """
-        return data.entries
+        return data.entries 
+    
+    def parse_data(self , feed_object_id , data):
+        """
+        extract desired info from data and set url_id for each one
+        """
+        parsed_data = [] 
+        for item in data:
+            item_data = {
+                "title":item.get("title") , 
+                "description":item.get("description"),
+                "link":item.get("link"),
+                "publish_date":item.get("pubDate"),
+                "url_id":feed_object_id
+            }
+            parsed_data.append(item_data)
+
+        return parsed_data
     
 
