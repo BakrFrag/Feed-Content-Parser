@@ -3,8 +3,8 @@ from fastapi import Depends, HTTPException , APIRouter
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from app.db.dependancies import get_db
-from app.schemas.feed import FeedContentModel , URLFeedModel , URLFeedWrtieModel
-from app.services.queries import get_rss_by_url , get_rss_url_by_id , add_rss_object , update_rss_object , insert_bulk_feed_content , delete_bulk_feed_content , get_bulk_feed_content , get_all_feed_urls
+from app.schemas.feed import FeedContentModel , URLFeedModel 
+from app.services.queries import get_rss_by_url , add_rss_object , update_rss_object , insert_bulk_feed_content , delete_bulk_feed_content , get_bulk_feed_content 
 from app.services.feed_parser import ParseRssFeed
 from app.services.utils import validate_parsed_url , reparse_url
 from typing import List 

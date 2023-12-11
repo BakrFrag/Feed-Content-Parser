@@ -1,12 +1,11 @@
 from datetime import datetime
 from sqlalchemy.orm import Session
 from datetime import datetime
-from fastapi import HTTPException , Depends
+from fastapi import Depends
 from sqlalchemy.orm import Session
-from app.db.database import engine
 from app.models.feed_content import FeedContent
 from app.models.feed_url import FeedURL
-from app.schemas.feed import FeedContentModel , URLFeedModel , URLFeedWrtieModel
+from app.schemas.feed import  URLFeedModel , URLFeedWrtieModel
 
 def get_rss_url_by_id(db:Session , feed_url:int) -> URLFeedModel :
     """
@@ -26,8 +25,7 @@ def add_rss_object(db:Session , feed_data: URLFeedWrtieModel) -> URLFeedModel:
     """
     add new feed rss url object to db 
     """
-    print("feed data:",feed_data,type(feed_data))
-    print("feed data dirs:",dir(feed_data))
+   
     url_object_data = dict(feed_data)
     feed_url_object = FeedURL(**url_object_data , number_of_parsed = 1)
     db.add(feed_url_object)
@@ -74,12 +72,7 @@ def get_bulk_feed_content(db:Session,url_id):
     """
     return bulk feed content that's attached for specfic url by id
     """
-    print(db.query(FeedContent).filter(url_id == url_id).all())
+   
     return db.query(FeedContent).filter(url_id == url_id).all()
 
 
-def get_all_feed_urls(db:Session):
-    """
-    retrieve all feeded rss urls
-    """
-    return db.query(FeedURL).all()

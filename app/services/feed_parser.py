@@ -53,7 +53,7 @@ class ParseRssFeed(object):
                 "title":item.get("title") , 
                 "description":item.get("description"),
                 "link":item.get("link"),
-                "publish_date":item.get("pubDate"),
+                "publish_date":item.get("published"),
                 "url_id":feed_object_id
             }
             parsed_data.append(item_data)
