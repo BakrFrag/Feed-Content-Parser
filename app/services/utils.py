@@ -17,7 +17,11 @@ def reparse_url(url_feed_object) -> bool:
     """
     repase = False 
     now = datetime.utcnow()
-    diff_in_minutes = (now - url_feed_object.parsed_datetime).total_seconds()/60
+    diff_in_minutes = (now - url_feed_object.last_parsed_datetime).total_seconds()/60
     if diff_in_minutes > 10:
         repase = True 
     return repase
+
+
+
+    

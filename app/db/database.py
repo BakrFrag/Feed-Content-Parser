@@ -1,11 +1,17 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-
+from app.models import feed_content , feed_url
 SQLALCHEMY_DATABASE_URL = "sqlite:///./parser.db"
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-Base = declarative_base()
+
+
+
+# migeate feed content to db
+feed_content.Base.metadata.create_all(bind=engine)
+# migrate feed url to db
+feed_url.Base.metadata.create_all(bind=engine)

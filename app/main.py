@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers.rss import router as rss_router
+from app.routers.rss_feed import router as rss_feed_router
 
 app = FastAPI()
-app.include_router(rss_router)
+app.include_router(rss_feed_router)

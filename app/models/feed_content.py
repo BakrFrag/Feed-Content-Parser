@@ -1,9 +1,6 @@
 from sqlalchemy import Column, String, ForeignKey , Integer, func
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import declarative_base , relationship
-from app.db.database import Base
-
-
+from . import Base
 class FeedContent(Base):
     __tablename__ = 'feed_content'
 

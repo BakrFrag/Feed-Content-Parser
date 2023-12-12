@@ -4,19 +4,19 @@ import xml.sax
 from fastapi import HTTPException
 
 
-class ParseRssFeed(object):
+class ParseRssFeedContent(object):
     """
-    parse rss feed within rss feed url 
+    parse rss feed content within rss feed url 
     """
 
     __parser = feedparser
-    def __init__(self,url):
+    def __init__(self,url , url_id):
         """
         init necessry variables for feed parse 
         """
         self.url = url
         self.parse_exception = None
-
+        self.url_id = url_id
     def _handle_parse_exception(self):
         """
         handle various exceptions while get rss feed content
@@ -27,7 +27,7 @@ class ParseRssFeed(object):
         elif isinstance(self.parse_exception , xml.sax._exceptions.SAXParseException):
             raise HTTPException(status_code = 400 , detail= "parsed url is not a valid rss feed")
     
-    def parse_rss_feed(self):
+    def parse_rss_conntent_feed(self):
         """
         parse rss feed & extract items
         """
@@ -41,9 +41,9 @@ class ParseRssFeed(object):
         """
         capture items in rss
         """
-        return data.entries 
+        return self._parse_data_items(data.entries) 
     
-    def parse_data(self , feed_object_id , data):
+    def _parse_data_items(self , data):
         """
         extract desired info from data and set url_id for each one
         """
@@ -54,7 +54,7 @@ class ParseRssFeed(object):
                 "description":item.get("description"),
                 "link":item.get("link"),
                 "publish_date":item.get("published"),
-                "url_id":feed_object_id
+                "url_id":self.url_id
             }
             parsed_data.append(item_data)
 
