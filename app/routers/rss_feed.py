@@ -34,19 +34,20 @@ def parse_url_feed(url_feed: URLFeedModel ,db:Session= Depends(get_db)):
         
         url_feed_object = get_rss_by_url(db , parsed_url)
         if not url_feed_object:
-            url_feed_object = add_rss_object(db , url_feed)
-            rss_parser = ParseRssFeedContent(parsed_url , url_feed_object.id)
+           
+            rss_parser = ParseRssFeedContent(parsed_url )
             data = rss_parser.parse_rss_conntent_feed()
-            insert_bulk_feed_content(db , data )
-            return JSONResponse(content=data, status_code=200)
+            url_feed_object = add_rss_object(db , url_feed)
+            insert_bulk_feed_content(db , data , url_feed_object.id )
+            return get_bulk_feed_content(db, url_feed_object.id)
         
         elif url_feed_object and reparse_url(url_feed_object):
-            rss_parser = ParseRssFeedContent(parsed_url , url_feed_object.id)
+            rss_parser = ParseRssFeedContent(parsed_url)
             data = rss_parser.parse_rss_conntent_feed()
             url_feed_object = update_rss_object(db , url_feed_object)
             delete_bulk_feed_content(db , url_feed_object.id)
-            insert_bulk_feed_content(db , data )
-            return JSONResponse(content=data, status_code=200)
+            insert_bulk_feed_content(db , data , url_id= url_feed_object.url )
+            return get_bulk_feed_content(db, url_feed_object.id)
         
         return get_bulk_feed_content(db ,url_feed_object.id)
     

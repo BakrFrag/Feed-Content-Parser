@@ -10,13 +10,13 @@ class ParseRssFeedContent(object):
     """
 
     __parser = feedparser
-    def __init__(self,url , url_id):
+    def __init__(self,url):
         """
         init necessry variables for feed parse 
         """
         self.url = url
         self.parse_exception = None
-        self.url_id = url_id
+       
     def _handle_parse_exception(self):
         """
         handle various exceptions while get rss feed content
@@ -54,7 +54,7 @@ class ParseRssFeedContent(object):
                 "description":item.get("description"),
                 "link":item.get("link"),
                 "publish_date":item.get("published"),
-                "url_id":self.url_id
+                
             }
             parsed_data.append(item_data)
 
