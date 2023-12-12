@@ -26,7 +26,7 @@ class JWTToken(object):
         get jwt token 
         """
         self.payload["user_id"]=user_id
-        token = jwt.encode(self.payload, self.secret_key, algorithm=ALGORITHM)
+        token = jwt.encode(self.payload, SECRET_KEY, algorithm=ALGORITHM)
         return token
 
 
