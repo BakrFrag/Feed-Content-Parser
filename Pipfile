@@ -8,6 +8,8 @@ fastapi = {extras = ["all"], version = "*"}
 uvicorn = "*"
 feedparser = "*"
 sqlalchemy = "*"
+jwt = "*"
+bcrypt = "*"
 
 [dev-packages]
 
