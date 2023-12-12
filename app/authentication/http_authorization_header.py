@@ -1,26 +1,31 @@
 from fastapi import Request, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from .jwt_token import JWTToken
-from . import SCHEMA 
+
 class JWTBearer(HTTPBearer):
-    def __init__(self, auto_error: bool = True):
+    """
+    JWT Bearer , ensure Headers include authorization and validate token
+    """
+    def __init__(self, auto_error: bool = False):
+        
         super(JWTBearer, self).__init__(auto_error=auto_error)
+        
 
     async def __call__(self, request: Request):
+        
         credentials: HTTPAuthorizationCredentials = await super(JWTBearer, self).__call__(request)
-        if credentials:
-      
-            if not credentials.scheme == SCHEMA:
-                raise HTTPException(status_code=401, detail="Invalid authentication scheme.")
-
-            if not self.verify_jwt(credentials.credentials):
-              
-                raise HTTPException(status_code=401, detail="Invalid token or expired token.")
-            return credentials.credentials
-        else:
-            raise HTTPException(status_code=401, detail="Invalid Authentication")
+        if credentials and (not self.verify_jwt(credentials.credentials)):
+               raise HTTPException(status_code=401, detail="Invalid token or expired token.")
+           
+        elif not credentials:
+               raise HTTPException(status_code=401, detail="Invalid Authentication")
+        
+        return credentials.credentials
 
     def verify_jwt(self, jwtoken: str) -> bool:
+        """
+        verify barsed token
+        """
         try:
                 
                 jwt = JWTToken()
