@@ -7,6 +7,7 @@ class FeedContentModel(BaseModel):
     schema model for feed content data
     """
     id: int 
+    url_id: int
     title: Optional[str] 
     description: Optional[str]
     link: Optional[str]
