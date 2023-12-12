@@ -1,20 +1,13 @@
 from pydantic import BaseModel
 
-class BaseUser(BaseModel):
-    """
-    base user schema 
-    """
-    username: str
-
-
-class UserLogin(BaseModel):
+class UserSchema(BaseModel):
     """
     user login schema
     """
-    
+    username: str
     password: str 
 
-class UserRegister(UserLogin):
+class UserRegister(UserSchema):
     """
     user register schema
     """
