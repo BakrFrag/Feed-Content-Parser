@@ -76,3 +76,11 @@ def get_bulk_feed_content(db:Session,url_id):
     return db.query(FeedContent).filter(url_id == url_id).all()
 
 
+def get_all_feed_urls(db:Session):
+    """
+    get all feed parsed urls
+    """
+    urls = db.query(FeedURL).all()
+    return urls
+
+

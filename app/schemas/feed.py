@@ -5,7 +5,7 @@ class URLFeedModel(BaseModel):
     """
     for submit url to rss feed 
     """
-    url: str
+    url: Optional[str]
 
 class URLFeedWrtieModel(URLFeedModel):
     """
