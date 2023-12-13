@@ -2,7 +2,7 @@
 REST API for extracting content from user submitted URL and parse RSS feed items
 
 ### Database & Schema Design 
-- ![Schema Design](https://ibb.co/zZC2H6h)
+- Schema Design: https://ibb.co/zZC2H6h
 - 3 entities as the following 
    - `User` for register user with their encrypted passwords 
    - `FeedURL` for store feed URL object with attributes like `id , url , number_of_parsed and last_parsed_datetime' 
