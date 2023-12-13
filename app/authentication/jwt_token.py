@@ -9,7 +9,7 @@ class JWTToken(object):
     def __init__(self):
         self.payload = {
             "user_id":None , 
-            "expires": time.time() + 36000
+            "expires": time.time() + 600
         }
 
     def token_response(self,user_id:int) -> Dict[str,str]:

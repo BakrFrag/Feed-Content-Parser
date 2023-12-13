@@ -54,6 +54,15 @@ def parse_url_feed(url_feed: URLFeedModel ,db:Session= Depends(get_db)):
     
 @router.get("/parse/",response_model=List[FullURLFeedModel])
 def get_all_urls(db:Session= Depends(get_db)):
-   
+   """
+   get all parsed rss feed urls
+   """
    return get_all_feed_urls(db)
 
+
+@router.get("/parse/{id:int}",response_model=List[FeedContentModel])
+def get_all_urls(id:int , db:Session= Depends(get_db)):
+    """
+    get content related to specfic rss url by id
+    """
+    return get_bulk_feed_content(db ,id)

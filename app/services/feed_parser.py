@@ -25,7 +25,8 @@ class ParseRssFeedContent(object):
         if isinstance(self.parse_exception, urllib.error.URLError):
             raise HTTPException(status_code = 400 , detail="can't parse url , check internet connection")
         elif isinstance(self.parse_exception , xml.sax._exceptions.SAXParseException):
-            raise HTTPException(status_code = 400 , detail= "parsed url is not a valid rss feed")
+
+            raise HTTPException(status_code = 400 , detail= f"can't parse url as {str(self.parse_exception)}")
     
     def parse_rss_conntent_feed(self):
         """

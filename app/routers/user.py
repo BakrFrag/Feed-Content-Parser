@@ -12,7 +12,7 @@ router = APIRouter(
     
 )
 
-@router.post("/add/",response_model=UserSchema)
+@router.post("/add",response_model=UserSchema)
 def register_new_user(user_data:UserRegister , db: Session = Depends(get_db)) -> UserSchema:
     """
     add new user

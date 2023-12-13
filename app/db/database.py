@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from app.models import feed_content , feed_url , user
-SQLALCHEMY_DATABASE_URL = "sqlite:///./parser.db"
+SQLALCHEMY_DATABASE_URL = "sqlite:///./rss_parser.db"
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
